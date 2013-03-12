@@ -124,7 +124,7 @@ public:
  *  Basically, the functions defined below which have names starting with 'Test' (eg 'TestMonodomain1d') are run directly.
  */
 
-class TestEpAgainstExactSolutions : public CxxTest::TestSuite
+class TestEpAgainstExactSolutionsLiteratePaper : public CxxTest::TestSuite
 {
 private:
     /* [This function can be mostly ignored]:
