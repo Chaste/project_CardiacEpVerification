@@ -152,7 +152,7 @@ private:
         double stim_width = 0.1; //cm
         double end_time = 10.0;  //ms
 
-        /* Define h and dt - note h is proportional to dt. */
+        /* Define h and dt. Note h is proportional to dt. */
         double init_h = 0.05; // cm, ie 500 um
         double h  = init_h*parametersScaleFactor;
         double dt = 0.01*parametersScaleFactor;
@@ -188,14 +188,14 @@ private:
         monodomain_problem.Initialise();
         monodomain_problem.Solve();
 
-        /* Print results */
+        /* Print results: */
         std::cout << std::setprecision(9);
         double cv = monodomain_problem.GetConductionVelocity();
         std::cout << h << ", " << dt << ", " << cv << "\n";
 
 
         /* If in 'testing mode', which only applies if the coarsest mesh is being used, we do a quick
-         * test the nothing has changed:
+         * test that nothing has changed:
          */
         if(doTest)
         {
