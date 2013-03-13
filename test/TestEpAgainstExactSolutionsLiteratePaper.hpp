@@ -127,7 +127,7 @@ public:
 class TestEpAgainstExactSolutionsLiteratePaper : public CxxTest::TestSuite
 {
 private:
-    /* [This function can be mostly ignored]:
+    /* [This function can be mostly ignored as an alternative is used]:
      * A function for computing errors, taking in the output directory of a cardiac problem and a class
      * saying how to calculate the exact solution. Note: since the output directory must be written for
      * this function to be used, and with small dt this will lead to a huge datafile (if printing timestep
@@ -142,8 +142,7 @@ private:
                        std::string variable     /* Should be 'V' or 'Phi_e' */,
                        double& rReturnedLinfL2Error,
                        double& rReturnedL2H1Error,
-                       bool testingMode = false /* if this is true, than the returned 'errors' are actually */
-                                                /* just the norms of the exact solution */)
+                       bool testingMode = false /* if this is true, than the returned 'errors' are actually just the norms of the exact solution */)
     {
         if(variable != "V" && variable !="Phi_e")
         {
