@@ -3,26 +3,27 @@
 #define TESTEPAGAINSTEXACTSOLUTIONS_HPP_
 
 
+/* = Testing the cardiac solvers against exact solutions =
+ *
+ * This is the main code for solving the monodomain, bidomain and bidomain-with-bath model problems.
+ *
+ * The following are all standard includes: */
 #include <cxxtest/TestSuite.h>
-
-/* Some standard includes */
 #include "AbstractCardiacCellFactory.hpp"
 #include "DistributedTetrahedralMesh.hpp"
 #include "EulerIvpOdeSolver.hpp"
 #include "ZeroStimulus.hpp"
 #include "PetscSetupAndFinalize.hpp"
-
-/* Classes that are defined in this project for these simulations */
-
-/* The cell model for the model problems is defined in this class */
+/* Next, the includes for classes that are defined in this project.
+ * `ModelProblemCellModel` defines the cell model for the model problems: */
 #include "ModelProblemCellModel.hpp"
-/* This file contains several classes which represent the exact solutions of the model problems */
+/* This file contains several classes which represent the exact solutions of the model problems: */
 #include "ModelProblemExactSolutionClasses.hpp"
-/* A class for calculating the L2 error (squared) at given time using a computed solution and exact solution */
+/* A class for calculating the L2 error (squared) at given time using a computed solution and exact solution: */
 #include "L2ErrorSquaredCalculator.hpp"
-/* A class for calculating the second part of the H1 error (squared) at given time using a computed solution and exact solution */
+/* A class for calculating the second part of the H1 error (squared) at given time using a computed solution and exact solution: */
 #include "H1SemiNormErrorSquaredCalculator.hpp"
-/* This files defines three classes which inherit from MonodomainProblem, BidomainProblem and BidomainWithBathProblem
+/* This next file defines three classes which inherit from `MonodomainProblem`, `BidomainProblem` and `BidomainWithBathProblem`
  * but also do error calculations (using the above).
  */
 #include "CardiacProblemWithErrorCalculatorClasses.hpp"
@@ -121,25 +122,24 @@ public:
 
 /*
  *  The code for running the model problems are defined in 'tests', as with all code in Chaste (see main documentation).
- *  Basically, the functions defined below which have names starting with 'Test' (eg 'TestMonodomain1d') are run directly.
  */
-
 class TestEpAgainstExactSolutionsLiteratePaper : public CxxTest::TestSuite
 {
 private:
-    /* [This function can be mostly ignored as an alternative is used]:
+    /* [The following function can be mostly ignored as an alternative is used]:
+     *
      * A function for computing errors, taking in the output directory of a cardiac problem and a class
      * saying how to calculate the exact solution. Note: since the output directory must be written for
      * this function to be used, and with small dt this will lead to a huge datafile (if printing timestep
      * is dt), we no longer use this method for calculating errors. However the code has been kept as it is
      * convenient. The errors are now calculated by computing the contributions to the error at the end of
-     * each timestep, as the simulation is progressing. See MonodomainProblemWithErrorCalculator
+     * each timestep, as the simulation is progressing. See `MonodomainProblemWithErrorCalculator`
      * and related classes.
      */
     template<unsigned DIM,unsigned PROBLEM_DIM>
     void ComputeErrors(std::string outputDirectory, AbstractScalarFunction<DIM>* pExactSolution,
                        DistributedTetrahedralMesh<DIM,DIM>& rMesh, double printingTimestep,
-                       std::string variable     /* Should be 'V' or 'Phi_e' */,
+                       std::string variable     /* Should be "V" or "Phi_e" */,
                        double& rReturnedLinfL2Error,
                        double& rReturnedL2H1Error,
                        bool testingMode = false /* if this is true, than the returned 'errors' are actually just the norms of the exact solution */)
@@ -191,24 +191,24 @@ private:
 
 
     /*
-     * The code for running the monodomain model problem, which we will walk through.
+     * This function is the code for running the monodomain model problem, which we will walk through.
      */
     template<unsigned DIM>
     void RunMonodomainProblem(double parametersScaleFactor /*how much to scale h and dt*/, bool doTest=false /*see later*/)
     {
-        /* Define h and dt based on the input `parametersScaleFactor`. Note dt is proportional to h^2 as required */
+        /* Define h and dt based on the `parametersScaleFactor`. Note dt is proportional to h^2^ as required. */
         double init_h = 0.1;
         double h      = init_h*parametersScaleFactor; // everything dimensionless
         double dt_ode = 0.1*parametersScaleFactor*parametersScaleFactor;
         double dt_pde = 0.1*parametersScaleFactor*parametersScaleFactor;
         double dt_printing = dt_pde;
 
-        /* Define conductivities in each direction as specified in paper */
+        /* Define conductivities in each direction as specified in the paper. */
         double s1 = 1.1/(M_PI*M_PI);
         double s2 = 1.2/(M_PI*M_PI);
         double s3 = 0.3/(M_PI*M_PI);
 
-        /* Define the integers m1, m2, m3 that go into F, as specified in paper */
+        /* Define the integers m,,1,,, m,,2,, m,,3,, that go into F, as specified in the paper. */
         unsigned m1 = 1;
         unsigned m2 = 2;
         unsigned m3 = 3;
