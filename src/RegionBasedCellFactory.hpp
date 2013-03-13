@@ -9,16 +9,17 @@
 
 
 
-// A concrete version of AbstractCardiacCellFactory() which allows the user
-// to set any number of 'stimulated regions', defined as a cuboid or sphere
-// together with a time of stimulus. (Magnitude of stimulus is taken in in
-// the constructor. Also, this class allows the user to set different initial
-// conditions on the cell model.
+/* A concrete version of `AbstractCardiacCellFactory` which allows the user to set any number of 'stimulated regions' (cuboids or spheres),
+ * together with a time of stimulus for that region. The magnitude of the stimulus is taken in in the constructor.
+ *
+ * Also, this class allows the user to prescribe initial conditions for the cell model, which is useful if you don't want to use the default
+ * cellml initial conditions at the beginning of the simulation.
+ */
 template<class CELL, unsigned DIM>
 class RegionBasedCellFactory : public AbstractCardiacCellFactory<DIM>
 {
 private:
-    std::vector<double> mCellInitialConditions;
+    std::vector<double> mCellInitialConditions; /*for all the cell models */
     std::vector<AbstractChasteRegion<DIM>*> mStimulatedRegions;
     std::vector<boost::shared_ptr<SimpleStimulus> > mStimuli;
     double mStimulusMagnitude;
@@ -41,7 +42,7 @@ public:
         }
     }
 
-
+    /* Add a spherical region to be stimulated. */
     void AddStimulatedSphere(c_vector<double,DIM> sphereCentre, double radius, double stimulusTime)
     {
         ChastePoint<DIM> centre(sphereCentre);
@@ -52,6 +53,7 @@ public:
         mStimuli.push_back(boost::shared_ptr<SimpleStimulus>(new SimpleStimulus(mStimulusMagnitude, mStimulusDuration, stimulusTime)));
     }
 
+    /* Add a cuboid region to be stimulated. */
     void AddStimulatedCuboid(c_vector<double,DIM> pointA, c_vector<double,DIM> pointB, double stimulusTime)
     {
         ChastePoint<DIM> point_a(pointA);
@@ -62,6 +64,7 @@ public:
 
     }
 
+    /* Specify initial conditions for all the cell models. */
     void SetCellModelInitialConditions(std::vector<double> initialConditions)
     {
         mCellInitialConditions = initialConditions;
@@ -72,12 +75,12 @@ public:
         }
     }
 
+    /* The main method the class needs to implement given it inherits from `AbstractCardiacCellFactory`. */
     AbstractCardiacCell* CreateCardiacCellForTissueNode(unsigned node)
     {
         CELL* p_cell;
         c_vector<double,DIM> location = this->GetMesh()->GetNode(node)->rGetLocation();
-        
-        
+
         std::vector<bool> contained_in_regions(mStimulatedRegions.size(), false);
         bool contained_in_none = true;
 

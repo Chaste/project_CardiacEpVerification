@@ -11,20 +11,20 @@
  * '''TODO: extra comments, where to get meshes, simulation times
  */
 
-/* First, we have some standard includes */
+/* First, we have some standard includes. */
 #include <cxxtest/TestSuite.h>
 #include <boost/assign.hpp>
 #include "CardiacSimulationArchiver.hpp"
 #include "MonodomainProblem.hpp"
 #include "PetscSetupAndFinalize.hpp"
-/* The cell model we use is the Mahajan2008 cell model, which is included with Chaste */
+/* The cell model we use is the Mahajan2008 cell model, which is included with Chaste. */
 #include "Mahajan2008BackwardEuler.hpp"
 /* The following cell factory is defined in this project. It allows the user to specify
  * stimuli for chosen spheres and cuboids.
  */
 #include "RegionBasedCellFactory.hpp"
 
-/* A simple enumeration for which mesh to use */
+/* A simple enumeration for which mesh to use: */
 typedef enum GeometryOption_
 {
     COARSERES_ISOTROPIC = 0,
@@ -58,7 +58,7 @@ public:
 class TestReentryOnRabbitMeshLiteratePaper : public CxxTest::TestSuite
 {
 private:
-    /* This method sets some numerical options */
+    /* This method sets some numerical options: */
     void SetHeartConfigForTest()
     {
         HeartConfig::Instance()->Reset();
@@ -72,12 +72,12 @@ public:
     void TestReentryS1andS2() throw(Exception)
     {
         /* The parts that the user can easily change are all listed here: */
-        GeometryOption geometry = COARSERES_ISOTROPIC;  // other options given in enumeration above
-        double s2_time = 170;                           // Time of S2 stimulus in ms. Set this to 'DBL_MAX' for there S2
-        double end_time = 1000;                         // ms
-        double printing_time = 10.0;                    // ms
-        bool write_archive = false;                     // whether to write an archive at the end of the simulation (so can simulation can be reloaded and run)
-        std::string notes = "";                         // anything here is added to output directory name (see below)
+        GeometryOption geometry = COARSERES_ISOTROPIC;  // Other options found in enumeration above
+        double s2_time = 170;                           // Time of S2 stimulus in ms. Set this to 'DBL_MAX' for there to be no S2.
+        double end_time = 1000;                         // in ms
+        double printing_time = 10.0;                    // in ms
+        bool write_archive = false;                     // Whether to write an archive at the end of the simulation (so can simulation can be reloaded and run).
+        std::string notes = "";                         // Anything here is added to output directory name (see below).
 
 
         /* Initial set up: */
@@ -119,8 +119,8 @@ public:
         };
 
 
-        /* Declare the cell factory. Pass in initial conditions for the cell models (extra useful functionality implemented in `RegionBasedCellFactory`
-         * and add the S2 stimulus */
+        /* Declare the cell factory. Pass in initial conditions for the cell models (allowing the user to do this is useful additional functionality
+         * implemented in `RegionBasedCellFactory`), and add the S2 stimulus. */
 
         RegionBasedCellFactoryWithApexS1<CellMahajan2008FromCellMLBackwardEuler> cell_factory;
 
@@ -138,7 +138,7 @@ public:
             cell_factory.AddStimulatedSphere(s2_stim_centre, s2_stim_radius, s2_time);
         }
 
-        /* The following code just sets up an output directory name based on the chosen options */
+        /* The following code just sets up an output directory name based on the chosen options. */
         std::stringstream ss;
         switch(geometry)
         {
@@ -184,7 +184,7 @@ public:
         cardiac_problem.Solve();
 
 
-        /* Write the archive if required and print out timings */
+        /* Write the archive if required and print out timings. */
         if(write_archive)
         {
             CardiacSimulationArchiver<MonodomainProblem<3> >::Save(cardiac_problem, "archived_" + ss.str());
