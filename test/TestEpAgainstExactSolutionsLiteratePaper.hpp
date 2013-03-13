@@ -191,6 +191,8 @@ private:
 
 
     /*
+     * == Monodomain model problem ==
+     *
      * This function is the code for running the monodomain model problem, which we will walk through.
      */
     template<unsigned DIM>
@@ -233,7 +235,7 @@ private:
             mesh.ConstructRegularSlabMesh(h, 1.0, 1.0, 1.0);
         }
 
-        /* End time is T = 1 */
+        /* End time is T = 1. */
         double end_time = 1.0;
         HeartConfig::Instance()->SetSimulationDuration(end_time);
 
@@ -254,7 +256,7 @@ private:
          */
         NonBathModelProblemCellFactory<DIM> cell_factory(c, m1, m2, m3);
 
-        /* This class can be used to get the exact solution for the voltage: (1+t)^(1/2)^F(x). */
+        /* This class can be used to get the exact solution for the voltage: (1+t)^1/2^F(x). */
         VoltageExactSolution<DIM> voltage_soln(m1,m2,m3);
 
         /* Define the monodomain problem class. `MonodomainProblemWithErrorCalculator` (defined in this project) is just
@@ -274,7 +276,7 @@ OutputFileHandler handler("doing_" + output_dir.str());
         monodomain_problem.Initialise();
         monodomain_problem.Solve();
 
-        /* Print the errors to screen. The commas and semi-colon are for easy copy & paste into Matlab. */
+        /* Print the errors to screen (the commas and semi-colon are for easy copy & paste into Matlab). */
         std::cout << std::setprecision(10);
         std::cout << parametersScaleFactor << ", " << monodomain_problem.mVoltageLinfL2Error << ", " << monodomain_problem.mVoltageL2H1Error << ";\n";
 
@@ -300,9 +302,9 @@ OutputFileHandler handler("doing_" + output_dir.str());
             TS_ASSERT_DELTA(l_inf_l2, monodomain_problem.mVoltageLinfL2Error, 1e-6);
             TS_ASSERT_DELTA(l2_h1, monodomain_problem.mVoltageL2H1Error, 1e-6);
 
-            /* Finally, check the second way of computing the error: when ComputeErrors() is called with true as the last parameter it
-             * ignores the numerical solution, so basically just calculates the norm of the exact solution, which we can
-             * calculate on paper.
+            /* Finally, check the second way of computing the error: when `ComputeErrors()` is called with `true` as the last parameter it
+             * ignores the numerical solution, ie just calculates the norm of the exact solution, which we can also
+             * calculate analytically.
              */
             double linf_l2_norm_V;
             double l2_h1_norm_V;
@@ -311,10 +313,11 @@ OutputFileHandler handler("doing_" + output_dir.str());
             TS_ASSERT_DELTA(l2_h1_norm_V, 2.855, 1e-1); // sqrt (3(1+pi^2)/2)
         }
     }
-    /* End of the main monodomain exact problems code */
 
-
-    /* Next, the main function for solving the bidomain model problem. Basically the same as the monodomain code, except has
+    /* == Bidomain model problem ==
+     *
+     *
+     * Next, the main function for solving the bidomain model problem. This is basically the same as the monodomain code, except has
      * an extracellular conductivity, and gets the errors for both voltage and extracellular potential. */
     template<unsigned DIM>
     void RunBidomainProblem(double parametersScaleFactor, bool doTest=false)
@@ -375,11 +378,11 @@ OutputFileHandler handler("doing_" + output_dir.str());
 
         NonBathModelProblemCellFactory<DIM> cell_factory(c*(1-k), m1, m2, m3);
 
-        /* Classes for returning V=(1+t)^(1/2)^F(x) and phi_e = -k(1+t)^(1/2)^F(x) and their derivatives: */
+        /* Classes for returning V=(1+t)^1/2^F(x) and phi_e = -k(1+t)^1/2^F(x) and their derivatives: */
         VoltageExactSolution<DIM> voltage_soln(m1,m2,m3);
         ExtracellularPotentialExactSolution<DIM> phi_e_soln(k,m1,m2,m3);
 
-        /* Solve and print errors */
+        /* Solve and print errors. */
         BidomainProblemWithErrorCalculator<DIM> bidomain_problem( &cell_factory, &voltage_soln, &phi_e_soln );
         bidomain_problem.PrintOutput(doTest);
 
@@ -431,8 +434,9 @@ OutputFileHandler handler("doing_" + output_dir.str());
         }
     }
 
-
-    /* Finally, the bidomain-with-bath-model problem: */
+    /* == Bidomain-with-bath model problem ==
+     *
+     * Finally, the bidomain-with-bath-model problem: */
     template<unsigned DIM>
     void RunBidomainWithBathProblem(double parametersScaleFactor, bool doTest=false)
     {
@@ -447,13 +451,13 @@ OutputFileHandler handler("doing_" + output_dir.str());
         double s2 = 1.2/(M_PI*M_PI);
         double s3 = 0.3/(M_PI*M_PI);
 
-        /* F(x,y,z) = cos(pi*x), whatever the dimension, for the bidomain-with-bath model problem: */
+        /* Here, F(x,y,z) = cos(pi*x), whatever the dimension. */
         unsigned m1 = 1;
 
         DistributedTetrahedralMesh<DIM,DIM> mesh;
         double c = -s1*m1*m1*M_PI*M_PI;
 
-        /* Set up the domain: x in [-1,2]; y,z in [0,1]. Note the translation at the end. */
+        /* Set up the domain: x in `[-1,2]`; y,z in `[0,1]`. Note the translation at the end. */
         c_vector<double,DIM> disp = zero_vector<double>(DIM);
         disp(0) = -1.0;
         if(DIM==1)
@@ -484,7 +488,7 @@ OutputFileHandler handler("doing_" + output_dir.str());
         double k = 1.0/sqrt(2);
         double sigma_e_factor = (1.0-k)/k;
 
-        /* Set up the bath conductivity and the electrodes, I=-alpha on x=-1, and I=alpha on x=2: */
+        /* Set up the bath conductivity and the electrodes, I,,E,,=-alpha on x=-1, and I,,E,,=alpha on x=2: */
         double alpha = 0.01;
         double extracellular_conductivity = s1*sigma_e_factor;
         double bath_conductivity = extracellular_conductivity/2.0;
@@ -553,8 +557,10 @@ OutputFileHandler handler("doing_" + output_dir.str());
         }
     }
 
-
-/* Finally, we have the public 'tests', which actually run the simulations: */
+    /* == Main test ==
+     *
+     * Finally, we have the public 'tests', which actually run the simulations.
+     */
 public:
     void TestRunTests() throw (Exception)
     {
