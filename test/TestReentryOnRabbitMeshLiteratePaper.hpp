@@ -7,6 +7,8 @@
  * verification case study.
  *
  * See main cardiac tutorials for more detailed descriptions of cardiac simulations.
+ *
+ * '''TODO: extra comments, where to get meshes, simulation times
  */
 
 /* First, we have some standard includes */
@@ -70,8 +72,6 @@ public:
     void TestReentryS1andS2() throw(Exception)
     {
         /* The parts that the user can easily change are all listed here: */
-        double conductivity_scaled_by = 1.5;
-
         GeometryOption geometry = COARSERES_ISOTROPIC;  // other options given in enumeration above
         double s2_time = 170;                           // Time of S2 stimulus in ms. Set this to 'DBL_MAX' for there S2
         double end_time = 1000;                         // ms
@@ -82,12 +82,16 @@ public:
 
         /* Initial set up: */
         SetHeartConfigForTest();
-        HeartConfig::Instance()->SetOdePdeAndPrintingTimeSteps(0.1, 0.1, printing_time);
+        HeartConfig::Instance()->SetOdePdeAndPrintingTimeSteps(0.1 /*ode dt*/, 0.1/*pde dt*/, printing_time);
         HeartConfig::Instance()->SetSimulationDuration(end_time);
 
-        double base_fibre_conductivity = 1.4; //   = 1.75*7/(1.75+7)
-
-        HeartConfig::Instance()->SetIntracellularConductivities(Create_c_vector(base_fibre_conductivity/conductivity_scaled_by,base_fibre_conductivity/conductivity_scaled_by, base_fibre_conductivity/conductivity_scaled_by));
+        /* The conductivity used is 0.9333, chosen arbitrarily so that reentry is sustained for several rotations. This number is
+         * the monodomain conductivity corresponding the Clerc 1976 intra- and extra-cellular conductivities, scaled by (almost exactly)
+         * 70%.
+         */
+        double conductivity = 14.0/15.0;
+        std::cout << conductivity << "\n";
+        HeartConfig::Instance()->SetIntracellularConductivities(Create_c_vector(conductivity,conductivity,conductivity));
 
         /* '''TODO: describe where to get these meshes */
         switch(geometry)
@@ -159,7 +163,6 @@ public:
                 break;
             }
         };
-        ss << "_CondScale_" << conductivity_scaled_by;
         if(s2_time != DBL_MAX)
         {
             ss << "_s2_" << s2_time;
