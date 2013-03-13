@@ -47,7 +47,7 @@ public:
     }
 };
 
-/* This class inherits from MonodomainProblem but does some extra work at the end of every (printing) timestep.
+/* This class inherits from `MonodomainProblem` but does some extra work at the end of every (printing) timestep.
  * (Note: the printing timestep will be set to be the same as the pde timestep).
  */
 class MonodomainProblemWithCvComputer1d : public MonodomainProblem<1>
@@ -161,7 +161,7 @@ private:
         double dt_pde = dt;
         double printing_dt = dt;
 
-        /* Run a standard monodomain simulation: */
+        /* Run a standard monodomain simulation, except use our class `MonodomainProblemWithCvComputer1d`: */
         DistributedTetrahedralMesh<1,1> mesh;
         mesh.ConstructRegularSlabMesh(h, width);
 
@@ -226,17 +226,18 @@ public:
         }
     }
 };
-/* The raw results are (h,dt,CV):
- * 0.05, 0.01, 0.0736375371
- * 0.025, 0.005, 0.0798080538
- * 0.0125, 0.0025, 0.0770119017
- * 0.00625, 0.00125, 0.0752304019
- * 0.003125, 0.000625, 0.0746756238
- * 0.0015625, 0.0003125, 0.0745052401
- * 0.00078125, 0.00015625, 0.0744549664
- * 0.000390625, 7.8125e-05, 0.074436781
- * 0.0001953125, 3.90625e-05, 0.0744289901
- */
+/* These are the raw results:  */
+//h, dt, CV
+//0.05, 0.01, 0.0736375371
+//0.025, 0.005, 0.0798080538
+//0.0125, 0.0025, 0.0770119017
+//0.00625, 0.00125, 0.0752304019
+//0.003125, 0.000625, 0.0746756238
+//0.0015625, 0.0003125, 0.0745052401
+//0.00078125, 0.00015625, 0.0744549664
+//0.000390625, 7.8125e-05, 0.074436781
+//0.0001953125, 3.90625e-05, 0.0744289901
+
 
 
 #endif //TESTCONDUCTIONVELOCITYCASESTUDYLITERATEPAPER_HPP_
