@@ -14,15 +14,11 @@
 #include <boost/assign.hpp>
 #include "CardiacSimulationArchiver.hpp"
 #include "UblasCustomFunctions.hpp"
-#include "PetscSetupAndFinalize.hpp"
-#include "RegionBasedCellFactory.hpp"
-#include "LuoRudy1991.hpp"
-#include "Mahajan2008BackwardEuler.hpp"
-#include "Shannon2004.hpp"
 #include "MonodomainProblem.hpp"
-#include "TrianglesMeshReader.hpp"
-#include "DistributedTetrahedralMesh.hpp"
-#include "Hdf5ToMeshalyzerConverter.hpp"
+#include "PetscSetupAndFinalize.hpp"
+
+#include "RegionBasedCellFactory.hpp"
+#include "Mahajan2008BackwardEuler.hpp"
 
 typedef enum GeometryOption_
 {
@@ -82,29 +78,8 @@ public:
         HeartConfig::Instance()->SetSimulationDuration(end_time);
 
         double base_fibre_conductivity = 1.4; //   = 1.75*7/(1.75+7)
-        double base_trans_conductivity = DBL_MAX;
 
-        switch(geometry)
-        {
-            case COARSERES_ISOTROPIC:
-            case MEDIUMRES_ISOTROPIC:
-            case FULLRES_ISOTROPIC:
-            {
-                HeartConfig::Instance()->SetIntracellularConductivities(Create_c_vector(base_fibre_conductivity/conductivity_scaled_by,base_fibre_conductivity/conductivity_scaled_by, base_fibre_conductivity/conductivity_scaled_by));
-                break;
-            }
-            case FULLRES_ANISOTROPIC:
-            {
-                NEVER_REACHED; // set base_trans_conductivity above
-                HeartConfig::Instance()->SetIntracellularConductivities(Create_c_vector(base_fibre_conductivity/conductivity_scaled_by,base_trans_conductivity/conductivity_scaled_by, base_trans_conductivity/conductivity_scaled_by));
-                break;
-            }
-            default:
-            {
-                NEVER_REACHED;
-                break;
-            }
-        };
+        HeartConfig::Instance()->SetIntracellularConductivities(Create_c_vector(base_fibre_conductivity/conductivity_scaled_by,base_fibre_conductivity/conductivity_scaled_by, base_fibre_conductivity/conductivity_scaled_by));
 
         switch(geometry)
         {
