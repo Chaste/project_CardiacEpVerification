@@ -270,7 +270,6 @@ private:
          */
         monodomain_problem.SetMesh(&mesh);
         monodomain_problem.PrintOutput(doTest);
-OutputFileHandler handler("doing_" + output_dir.str());
 
         //monodomain_problem.SetWriteInfo();
         monodomain_problem.Initialise();
@@ -385,8 +384,6 @@ OutputFileHandler handler("doing_" + output_dir.str());
         /* Solve and print errors. */
         BidomainProblemWithErrorCalculator<DIM> bidomain_problem( &cell_factory, &voltage_soln, &phi_e_soln );
         bidomain_problem.PrintOutput(doTest);
-
-OutputFileHandler handler("doing_" + output_dir.str());
 
         bidomain_problem.SetMesh(&mesh);
         //bidomain_problem.SetWriteInfo();
@@ -521,7 +518,6 @@ OutputFileHandler handler("doing_" + output_dir.str());
 
         BidomainWithBathProblemWithErrorCalculator<DIM> bidomain_problem( &cell_factory, &voltage_soln, &phi_e_soln);
         bidomain_problem.PrintOutput(doTest);
-OutputFileHandler handler("doing_" + output_dir.str());
 
         bidomain_problem.SetMesh(&mesh);
         //bidomain_problem.SetWriteInfo();
@@ -562,14 +558,14 @@ OutputFileHandler handler("doing_" + output_dir.str());
      * Finally, we have the public 'tests', which actually run the simulations.
      */
 public:
-    void TestRunTests() throw (Exception)
+    void xxxTestRunTests() throw (Exception)
     {
         RunMonodomainProblem<1>(1.0,true);
         RunBidomainProblem<1>(1.0,true);
         RunBidomainWithBathProblem<1>(1.0,true);
     }
 
-    void TestMonodomain1d() throw (Exception)
+    void xxxTestMonodomain1d() throw (Exception)
     {
         for(unsigned N=0; N<5; N++)
         {
@@ -587,16 +583,16 @@ public:
         }
     }
 
-    void todoTestMonodomain3d() throw (Exception)
+    void cccTestMonodomain3d() throw (Exception)
     {
-        for(unsigned N=0; N<5; N++)
+        for(unsigned N=1; N<2; N++)
         {
             double factor = 1.0/pow(2,N);
             RunMonodomainProblem<3>(factor);
         }
     }
 
-    void TestBidomain1d() throw (Exception)
+    void ccccTestBidomain1d() throw (Exception)
     {
         HeartConfig::Instance()->SetUseAbsoluteTolerance(1e-9);
         for(unsigned N=0; N<5; N++)
@@ -616,7 +612,7 @@ public:
         }
     }
 
-    void todoTestBidomain3d() throw (Exception)
+    void xxxTestBidomain3d() throw (Exception)
     {
         HeartConfig::Instance()->SetUseAbsoluteTolerance(1e-11);
         for(unsigned N=0; N<4; N++)
@@ -626,10 +622,10 @@ public:
         }
     }
 
-    void todoTestBidomainWithBath2d() throw (Exception)
+    void TestBidomainWithBath2d() throw (Exception)
     {
         HeartConfig::Instance()->SetUseAbsoluteTolerance(1e-9);
-        for(unsigned N=0; N<5; N++)
+        for(unsigned N=4; N<5; N++)
         {
             double factor = 1.0/pow(2,N);
             RunBidomainWithBathProblem<2>(factor);

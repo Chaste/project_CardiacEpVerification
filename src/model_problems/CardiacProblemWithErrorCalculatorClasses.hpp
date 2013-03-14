@@ -28,6 +28,13 @@ public:
     double mExtracellularPotentialLinfL2Error;
     double mExtracellularPotentialL2H1Error;
 
+    Vec mBidomainVoltageSolution;
+    Vec mBidomainExtracellularPotentialSolution;
+
+    double mNextProgressTime;
+    unsigned mPercent;
+
+
 public:
     ErrorCalculatorForCardiacProblems(AbstractScalarFunction<DIM>* pVoltageExactSolution,
                     AbstractScalarFunction<DIM>* pExtracellularPotentialExactSolution = NULL)
@@ -36,45 +43,69 @@ public:
           mVoltageLinfL2Error(0.0),
           mVoltageL2H1Error(0.0),
           mExtracellularPotentialLinfL2Error(0.0),
-          mExtracellularPotentialL2H1Error(0.0)
+          mExtracellularPotentialL2H1Error(0.0),
+          mBidomainVoltageSolution(NULL),
+          mNextProgressTime(0.01),
+          mPercent(0)
     {
     }
 
-    void DoErrorCalculation(double time, AbstractTetrahedralMesh<DIM,DIM>& rMesh, Vec solution, bool includeExtracellularPotential /*same as: whether not monodomain*/)
+    ~ErrorCalculatorForCardiacProblems()
     {
-        // two temporary vecs storing the voltage and phi_e solutions
-        Vec voltage = PetscTools::CreateAndSetVec(rMesh.GetNumNodes(), 0.0);
-        Vec extracellular_potential  = PetscTools::CreateAndSetVec(rMesh.GetNumNodes(), 0.0);
-
-        if(!includeExtracellularPotential)
+        if(mBidomainVoltageSolution)
         {
-            // just monodomain, solution is the voltage
-            voltage = solution;
+            PetscTools::Destroy(mBidomainVoltageSolution);
+            PetscTools::Destroy(mBidomainExtracellularPotentialSolution);
         }
-        else
+    }
+
+    void DoErrorCalculation(double time, AbstractTetrahedralMesh<DIM,DIM>& rMesh, Vec solution, bool notMonodomain)
+    {
+        Vec& r_voltage = solution;
+
+        if(notMonodomain)
         {
+            if(mBidomainVoltageSolution==NULL)
+            {
+                mBidomainVoltageSolution = PetscTools::CreateAndSetVec(rMesh.GetNumNodes(), 0.0);
+                mBidomainExtracellularPotentialSolution  = PetscTools::CreateAndSetVec(rMesh.GetNumNodes(), 0.0);
+            }
+
             // bidomain (or bidomain-with-bath), solution = [V0 phie0 V1 phie1 ... Vn phie_n], where n is the number of nodes.
             for(unsigned i=0; i<rMesh.GetNumNodes(); i++)
             {
-                PetscVecTools::SetElement(voltage, i, PetscVecTools::GetElement(solution, 2*i));
-                PetscVecTools::SetElement(extracellular_potential, i, PetscVecTools::GetElement(solution, 2*i+1));
+                PetscVecTools::SetElement(mBidomainVoltageSolution, i, PetscVecTools::GetElement(solution, 2*i));
+                PetscVecTools::SetElement(mBidomainExtracellularPotentialSolution, i, PetscVecTools::GetElement(solution, 2*i+1));
             }
+
+            r_voltage = mBidomainVoltageSolution;
         }
 
         // voltage
-        DoSingleErrorCalculation(mpVoltageExactSolution, time, rMesh, voltage, mVoltageLinfL2Error, mVoltageL2H1Error, true);
+        DoSingleErrorCalculation(mpVoltageExactSolution, time, rMesh, r_voltage, mVoltageLinfL2Error, mVoltageL2H1Error, true);
 
         // Phi_e
-        if(includeExtracellularPotential)
+        if(notMonodomain)
         {
             // Note: phi_e at initial condition is just set to zeros (really, the solver should solve the second bidomain equation
             // given initial V to determine what initial phi_e is, but the bidomain solver doesn't do this, and phi_e is just initialised to zero)
             // so we have to not include it. Recall phi_e initial value doesn't affect anything.
             if(fabs(time)>1e-12) // ie if t!=0
             {
-                DoSingleErrorCalculation(mpExtracellularPotentialExactSolution, time, rMesh, extracellular_potential, mExtracellularPotentialLinfL2Error, mExtracellularPotentialL2H1Error, false);
+                DoSingleErrorCalculation(mpExtracellularPotentialExactSolution, time, rMesh, mBidomainExtracellularPotentialSolution, mExtracellularPotentialLinfL2Error, mExtracellularPotentialL2H1Error, false);
             }
         }
+
+        std::cout << std::setprecision(10);
+        std::cout << time << "\n";
+        if(time >= mNextProgressTime)
+        {
+            mPercent++;
+            unsigned i=system("date"); i=i;
+            std::cout << mPercent << "%\n" << std::flush;
+            mNextProgressTime += 0.01;
+        }
+
     }
 
     void DoSingleErrorCalculation(AbstractScalarFunction<DIM>* pExactSolution, double time, AbstractTetrahedralMesh<DIM,DIM>& rMesh, Vec solution,
@@ -122,6 +153,8 @@ public:
         {
             this->mSolution = this->CreateInitialCondition(); // make sure mSolution is set up
             this->DoErrorCalculation(time,*(this->mpMesh),this->GetSolution(),false/*ie no phi_e*/);
+            PetscTools::Destroy(this->mSolution);
+            this->mSolution = NULL;
         }
     }
 
@@ -156,6 +189,8 @@ public:
         {
             this->mSolution = this->CreateInitialCondition();
             this->DoErrorCalculation(time,*(this->mpMesh),this->GetSolution(),true/*different to above*/);
+            PetscTools::Destroy(this->mSolution);
+            this->mSolution = NULL;
         }
     }
 
@@ -188,6 +223,8 @@ public:
         {
             this->mSolution = this->CreateInitialCondition();
             this->DoErrorCalculation(time,*(this->mpMesh),this->GetSolution(),true);
+            PetscTools::Destroy(this->mSolution);
+            this->mSolution = NULL;
         }
     }
 
