@@ -1,36 +1,35 @@
 
  = Verification of computational models of cardiac electro-physiology = 
 
-The project corresponds to the paper:
-
-Pras Pathmanathan and Richard A. Gray, ''Verification of computational models of cardiac electro-physiology'' (in submission).
+The project corresponds to the paper: Pras Pathmanathan and Richard A. Gray, ''Verification of computational models of 
+cardiac electro-physiology'' (in submission). 
 
 Walk-throughs of the main tests are given below. The entire project, which includes all source files, results files and matlab scripts, can be viewed at 
 [https://chaste.cs.ox.ac.uk/trac/browser/projects/CardiacEpVerification projects/CardiacEpVerification],
 
 For new users of Chaste who wish to install Chaste and run this project, see GettingStarted and ChasteGuides. 
 
- == Testing the Chaste cardiac electro-physiology solver against exact solution ==
+ == Testing the electro-physiology solver against exact solutions ==
 
-This test compares the results of the cardiac EP solver in Chaste on model problems with exact solutions, for monodomain, bidomain and bidomain-with-bath,
-for 1D, 2D and 3D. See [PaperTutorials/CardiacEpVerification/EpAgainstExactSolutions EpAgainstExactSolutions]. 
+This test compares the results of the cardiac electro-physiology solver in Chaste on model problems with exact solutions, for monodomain, bidomain and bidomain-with-bath,
+and in 1D, 2D and 3D. See [PaperTutorials/CardiacEpVerification/EpAgainstExactSolutions EpAgainstExactSolutions]. 
 A results file containing the raw results is included in the project (link above).
 
- == 1D conduction velocity (calculation verification case study 1) ==
+ == 1D conduction velocity ==
 
-This test computes the conduction velocity in a 1D monodomain simulation using different mesh resolutions. A matlab script applied Richardson Extrapolation
+This test computes the conduction velocity in a 1D monodomain simulation using different mesh resolutions. A matlab script applies Richardson extrapolation
 to the results. See [PaperTutorials/CardiacEpVerification/ConductionVelocityCaseStudy ConductionVelocityCaseStudy]. 
-A results file containing the raw results is included in the project (link above), as is the matlab script which does the Richardson extrapolation.
+A results file containing the raw results is included in the project (link above), as is the matlab script.
 
- == Reentry on a 3D rabbit geometry (calculation verification case study 2)  ==
+ == Reentry on a 3D rabbit geometry  ==
 
 The test uses an S1-S2 protocol to induce reentry on a rabbit geometry, and is set up to run on the full-resolution Oxford rabbit heart, as well
-as medium and coarse resolution versions. See [PaperTutorials/CardiacEpVerification/ReentryOnRabbitMesh ReentryOnRabbitMesh]. 
+as medium and coarse resolution versions of the same geometry. See [PaperTutorials/CardiacEpVerification/ReentryOnRabbitMesh ReentryOnRabbitMesh]. 
 
 To run this test you will need to download the meshes and provide their locations. The coarse mesh is already in the Chaste repository, so nothing
-needs to be done for this. It should be fine to run the coarse mesh simulation on a normal desktop or laptop. The fine mesh is available for download
-at the main [http://www.cs.ox.ac.uk/chaste/download.html download page] (download OxfordRabbitHeart_binary.tgz). Simulations using this will
-probably require high-performance computing resources. The medium resolution mesh is currently not publicly available (Oxford CS users please speak to
-a developer) - this page will be updated when it is available.
+needs to be done for this. Also, it should be fine to run the coarse mesh simulation on a normal desktop or laptop. The fine mesh is available for download
+at the main [http://www.cs.ox.ac.uk/chaste/download.html download page] (download `OxfordRabbitHeart_binary.tgz`). Simulations using this mesh will
+probably require high-performance computing resources. The medium resolution mesh is currently not publicly available (though Oxford CS members please 
+speak to a developer). This page will be updated when the medium-resolution mesh is available.
 
 
