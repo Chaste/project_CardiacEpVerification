@@ -277,7 +277,7 @@ private:
 
         /* Print the errors to screen (the commas and semi-colon are for easy copy & paste into Matlab). */
         std::cout << std::setprecision(10);
-        std::cout << parametersScaleFactor << ", " << monodomain_problem.mVoltageLinfL2Error << ", " << monodomain_problem.mVoltageL2H1Error << ";\n";
+        std::cout << h << ", " << monodomain_problem.mVoltageLinfL2Error << ", " << monodomain_problem.mVoltageL2H1Error << ";\n";
 
 
         /* There is also some test code. To check that the code (in particular the error calculators) is doing what it should be, if DIM=1 and the coarsest mesh
@@ -391,7 +391,7 @@ private:
         bidomain_problem.Solve();
 
         std::cout << std::setprecision(10);
-        std::cout << parametersScaleFactor << ", " << bidomain_problem.mVoltageLinfL2Error << ", " << bidomain_problem.mVoltageL2H1Error << ", " << bidomain_problem.mExtracellularPotentialLinfL2Error << ", " << bidomain_problem.mExtracellularPotentialL2H1Error << ";\n";
+        std::cout << h << ", " << bidomain_problem.mVoltageLinfL2Error << ", " << bidomain_problem.mVoltageL2H1Error << ", " << bidomain_problem.mExtracellularPotentialLinfL2Error << ", " << bidomain_problem.mExtracellularPotentialL2H1Error << ";\n";
 
         /* Test code similar to monodomain version: */
         if(doTest)
@@ -525,7 +525,7 @@ private:
         bidomain_problem.Solve();
 
         std::cout << std::setprecision(10);
-        std::cout << parametersScaleFactor << ", " << bidomain_problem.mVoltageLinfL2Error << ", " << bidomain_problem.mVoltageL2H1Error  << ", " << bidomain_problem.mExtracellularPotentialLinfL2Error << ", " << bidomain_problem.mExtracellularPotentialL2H1Error << ";\n";
+        std::cout << h << ", " << bidomain_problem.mVoltageLinfL2Error << ", " << bidomain_problem.mVoltageL2H1Error  << ", " << bidomain_problem.mExtracellularPotentialLinfL2Error << ", " << bidomain_problem.mExtracellularPotentialL2H1Error << ";\n";
 
 
         /* Similar to before: */
@@ -558,14 +558,14 @@ private:
      * Finally, we have the public 'tests', which actually run the simulations.
      */
 public:
-    void xxxTestRunTests() throw (Exception)
+    void TestRunTests() throw (Exception)
     {
         RunMonodomainProblem<1>(1.0,true);
         RunBidomainProblem<1>(1.0,true);
         RunBidomainWithBathProblem<1>(1.0,true);
     }
 
-    void xxxTestMonodomain1d() throw (Exception)
+    void doneTestMonodomain1d() throw (Exception)
     {
         for(unsigned N=0; N<5; N++)
         {
@@ -583,16 +583,16 @@ public:
         }
     }
 
-    void cccTestMonodomain3d() throw (Exception)
+    void todoTestMonodomain3d() throw (Exception)
     {
-        for(unsigned N=1; N<2; N++)
+        for(unsigned N=3; N<4; N++)
         {
             double factor = 1.0/pow(2,N);
             RunMonodomainProblem<3>(factor);
         }
     }
 
-    void ccccTestBidomain1d() throw (Exception)
+    void doneTestBidomain1d() throw (Exception)
     {
         HeartConfig::Instance()->SetUseAbsoluteTolerance(1e-9);
         for(unsigned N=0; N<5; N++)
@@ -612,7 +612,7 @@ public:
         }
     }
 
-    void xxxTestBidomain3d() throw (Exception)
+    void todoTestBidomain3d() throw (Exception)
     {
         HeartConfig::Instance()->SetUseAbsoluteTolerance(1e-11);
         for(unsigned N=0; N<4; N++)
@@ -622,10 +622,10 @@ public:
         }
     }
 
-    void TestBidomainWithBath2d() throw (Exception)
+    void doneTestBidomainWithBath2d() throw (Exception)
     {
         HeartConfig::Instance()->SetUseAbsoluteTolerance(1e-9);
-        for(unsigned N=4; N<5; N++)
+        for(unsigned N=0; N<5; N++)
         {
             double factor = 1.0/pow(2,N);
             RunBidomainWithBathProblem<2>(factor);
@@ -691,47 +691,50 @@ public:
 NEW RESULTS
 
 Entering TestMonodomain1d
-1, 0.04729256677, 0.2559326838;
-0.5, 0.01219747854, 0.1241794945;
-0.25, 0.003076150583, 0.06157125564;
-0.125, 0.0007707704265, 0.030719;
-0.0625, 0.0001928018545, 0.01535111097;
+0.1, 0.04729256677, 0.2559326838;
+0.05, 0.01219747854, 0.1241794945;
+0.025, 0.003076150583, 0.06157125564;
+0.0125, 0.0007707704265, 0.030719;
+0.00625, 0.0001928018545, 0.01535111097;
 
 Entering TestMonodomain2d
-1, 0.09725475116, 0.9603208893;
-0.5, 0.02701293006, 0.4708969787;
-0.25, 0.006950391271, 0.2337494882;
-0.125, 0.001750637086, 0.1166425258;
-0.0625, 0.0004385267801, 0.05829111062;
+0.1, 0.09725475116, 0.9603208893;
+0.05, 0.02701293006, 0.4708969787;
+0.025, 0.006950391271, 0.2337494882;
+0.0125, 0.001750637086, 0.1166425258;
+0.00625, 0.0004385267801, 0.05829111062;
 
 Entering TestBidomain1d
-1, 0.04265058497, 0.2537848512, 0.02988107835, 0.1723212284;
-0.5, 0.01089005107, 0.1238652902, 0.00760416821, 0.08669301031;
-0.25, 0.002739314674, 0.06153026531, 0.00191092449, 0.04339679202;
-0.125, 0.0006859231324, 0.03071381977, 0.0004783746599, 0.02170398909;
-0.0625, 0.000171550361, 0.01535046176, 0.0001196347713, 0.01085267045;
+0.1, 0.04265058497, 0.2537848512, 0.02988107835, 0.1723212284;
+0.05, 0.01089005107, 0.1238652902, 0.00760416821, 0.08669301031;
+0.025, 0.002739314674, 0.06153026531, 0.00191092449, 0.04339679202;
+0.0125, 0.0006859231324, 0.03071381977, 0.0004783746599, 0.02170398909;
+0.00625, 0.000171550361, 0.01535046176, 0.0001196347713, 0.01085267045;
 
 Entering TestBidomain2d
-1, 0.06757124444, 0.9378114481, 0.04767141994, 0.6344914118;
-0.5, 0.01775058515, 0.4670640583, 0.0125103767, 0.3266563191;
-0.25, 0.004496896232, 0.2332270697, 0.00316834263, 0.1644645911;
-0.125, 0.001128029025, 0.1165725359, 0.0007946991365, 0.0823727219;
-0.0625, 0.0002822467237, 0.0582810478, 0.0001988392088, 0.04120385967;
+0.1, 0.06757124444, 0.9378114481, 0.04767141994, 0.6344914118;
+0.05, 0.01775058515, 0.4670640583, 0.0125103767, 0.3266563191;
+0.025, 0.004496896232, 0.2332270697, 0.00316834263, 0.1644645911;
+0.0125, 0.001128029025, 0.1165725359, 0.0007946991365, 0.0823727219;
+0.00625, 0.0002822467237, 0.0582810478, 0.0001988392088, 0.04120385967;
+
+Entering TestBidomainWithBath2d
+0.1, 0.04404732625, 0.2364742997, 0.05985167155, 0.1633438949;
+0.05, 0.01134407088, 0.1137769974, 0.01533843483, 0.08013854566;
+0.025, 0.002860772769, 0.05627417462, 0.003864296406, 0.03978798753;
+0.0125, 0.0007168090283, 0.02805656314, 0.0009681450983, 0.01984697711;
+0.00625, 0.0001793041513, 0.01401773733, 0.0002421824826, 0.009915136989;
+
 
 ====================================
 
 PARTIAL
 
 Entering TestMonodomain3d
-1, 0.1850249886, 2.083573121;
-0.5, 0.05883734337, 1.055422315;
-0.25, 0.01571918644, 0.5268934223;
+0.1, 0.1850249886, 2.083573121;
+0.05, 0.05883734337, 1.055422315;
+0.025, 0.01571918644, 0.5268934223;
 
-Entering TestBidomainWithBath2d
-1, 0.04404732625, 0.2364742997, 0.05985167155, 0.1633438949;
-0.5, 0.01134407088, 0.1137769974, 0.01533843483, 0.08013854566;
-0.25, 0.002860772769, 0.05627417462, 0.003864296406, 0.03978798753;
-0.125, 0.0007168090283, 0.02805656314, 0.0009681450983, 0.01984697711;
 
          */
 

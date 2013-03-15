@@ -96,15 +96,15 @@ public:
             }
         }
 
-        std::cout << std::setprecision(10);
-        std::cout << time << "\n";
-        if(time >= mNextProgressTime)
-        {
-            mPercent++;
-            unsigned i=system("date"); i=i;
-            std::cout << mPercent << "%\n" << std::flush;
-            mNextProgressTime += 0.01;
-        }
+//        std::cout << std::setprecision(10);
+//        std::cout << time << "\n";
+//        if(time >= mNextProgressTime)
+//        {
+//            mPercent++;
+//            unsigned i=system("date"); i=i;
+//            std::cout << mPercent << "%\n" << std::flush;
+//            mNextProgressTime += 0.01;
+//        }
 
     }
 

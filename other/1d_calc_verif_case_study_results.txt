@@ -1,0 +1,22 @@
+
+The following is the output of TestRun1dCv() in TestConductionVelocityCaseStudyLiteratePaper. 
+
+First column: h (cm)
+Second column: dt (ms)
+Third column: computed conduction velocity (cm/ms)
+
+0.05, 0.01, 0.0736375371
+0.025, 0.005, 0.0798080538
+0.0125, 0.0025, 0.0770119017
+0.00625, 0.00125, 0.0752304019
+0.003125, 0.000625, 0.0746756238
+0.0015625, 0.0003125, 0.0745052401
+0.00078125, 0.00015625, 0.0744549664
+0.000390625, 7.8125e-05, 0.074436781
+0.0001953125, 3.90625e-05, 0.0744289901
+
+
+-----
+
+
+The following is the results  

@@ -141,7 +141,7 @@ public:
 
 
 
-class TestSolutionVerification : public CxxTest::TestSuite
+class TestConductionVelocityCaseStudyLiteratePaper : public CxxTest::TestSuite
 {
 private:
     /* The main simulation function: */
@@ -207,7 +207,8 @@ private:
         }
     }
 
-/* The code which runs the above. The Richardson extrapolation of the results in done outside of Chaste. */
+/* The code which runs the above. The Richardson extrapolation of the results in done outside of Chaste. See the folder named 'other' in
+ * this project of a text file of the results. */
 public:
     void TestRunTest() throw (Exception)
     {
@@ -226,17 +227,7 @@ public:
         }
     }
 };
-/* These are the raw results:  */
-//h, dt, CV
-//0.05, 0.01, 0.0736375371
-//0.025, 0.005, 0.0798080538
-//0.0125, 0.0025, 0.0770119017
-//0.00625, 0.00125, 0.0752304019
-//0.003125, 0.000625, 0.0746756238
-//0.0015625, 0.0003125, 0.0745052401
-//0.00078125, 0.00015625, 0.0744549664
-//0.000390625, 7.8125e-05, 0.074436781
-//0.0001953125, 3.90625e-05, 0.0744289901
+
 
 
 
