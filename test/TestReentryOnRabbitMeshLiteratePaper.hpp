@@ -8,7 +8,6 @@
  *
  * See main cardiac tutorials for more detailed descriptions of cardiac simulations.
  *
- * '''TODO: extra comments, where to get meshes, simulation times
  */
 
 /* First, we have some standard includes. */
@@ -93,7 +92,8 @@ public:
         std::cout << conductivity << "\n";
         HeartConfig::Instance()->SetIntracellularConductivities(Create_c_vector(conductivity,conductivity,conductivity));
 
-        /* '''TODO: describe where to get these meshes */
+        /* '''The coarse mesh is in the repository but you will need to obtain the medium/fine meshes and provide the locations here'''
+         * (see project intro page for details on where to get the meshes). */
         switch(geometry)
         {
             case COARSERES_ISOTROPIC:

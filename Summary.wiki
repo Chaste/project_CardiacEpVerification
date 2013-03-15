@@ -5,7 +5,32 @@ The project corresponds to the paper:
 
 Pras Pathmanathan and Richard A. Gray, ''Verification of computational models of cardiac electro-physiology'' (in submission).
 
-The code for this project can be obtained at ''[finish]''.
+Walk-throughs of the main tests are given below. The entire project, which includes all source files, results files and matlab scripts, can be viewed at 
+[https://chaste.cs.ox.ac.uk/trac/browser/projects/CardiacEpVerification projects/CardiacEpVerification],
 
-''Description to be added''.
+For new users of Chaste who wish to install Chaste and run this project, see GettingStarted and ChasteGuides. 
+
+ == Testing the Chaste cardiac electro-physiology solver against exact solution ==
+
+This test compares the results of the cardiac EP solver in Chaste on model problems with exact solutions, for monodomain, bidomain and bidomain-with-bath,
+for 1D, 2D and 3D. See [PaperTutorials/CardiacEpVerification/EpAgainstExactSolutions EpAgainstExactSolutions]. 
+A results file containing the raw results is included in the project (link above).
+
+ == 1D conduction velocity (calculation verification case study 1) ==
+
+This test computes the conduction velocity in a 1D monodomain simulation using different mesh resolutions. A matlab script applied Richardson Extrapolation
+to the results. See [PaperTutorials/CardiacEpVerification/ConductionVelocityCaseStudy ConductionVelocityCaseStudy]. 
+A results file containing the raw results is included in the project (link above), as is the matlab script which does the Richardson extrapolation.
+
+ == Reentry on a 3D rabbit geometry (calculation verification case study 2)  ==
+
+The test uses an S1-S2 protocol to induce reentry on a rabbit geometry, and is set up to run on the full-resolution Oxford rabbit heart, as well
+as medium and coarse resolution versions. See [PaperTutorials/CardiacEpVerification/ReentryOnRabbitMesh ReentryOnRabbitMesh]. 
+
+To run this test you will need to download the meshes and provide their locations. The coarse mesh is already in the Chaste repository, so nothing
+needs to be done for this. It should be fine to run the coarse mesh simulation on a normal desktop or laptop. The fine mesh is available for download
+at the main [http://www.cs.ox.ac.uk/chaste/download.html download page] (download OxfordRabbitHeart_binary.tgz). Simulations using this will
+probably require high-performance computing resources. The medium resolution mesh is currently not publicly available (Oxford CS users please speak to
+a developer) - this page will be updated when it is available.
+
 
