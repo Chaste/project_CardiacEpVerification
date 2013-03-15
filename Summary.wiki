@@ -7,9 +7,9 @@ cardiac electro-physiology'' (in submission).
 Walk-throughs of the main tests are given below. The entire project, which includes all source files, results files and matlab scripts, can be viewed at 
 [https://chaste.cs.ox.ac.uk/trac/browser/projects/CardiacEpVerification projects/CardiacEpVerification],
 
-For new users of Chaste who wish to install Chaste and run this project, see GettingStarted and ChasteGuides. 
+New users of Chaste who wish to install Chaste and run this project, see GettingStarted and ChasteGuides. 
 
- == Testing the electro-physiology solver against exact solutions ==
+ == Testing against exact solutions ==
 
 This test compares the results of the cardiac electro-physiology solver in Chaste on model problems with exact solutions, for monodomain, bidomain and bidomain-with-bath,
 and in 1D, 2D and 3D. See [PaperTutorials/CardiacEpVerification/EpAgainstExactSolutions EpAgainstExactSolutions]. 
