@@ -558,7 +558,7 @@ private:
      * Finally, we have the public 'tests', which actually run the simulations.
      */
 public:
-    void TestRunTests() throw (Exception)
+    void cccTestRunTests() throw (Exception)
     {
         RunMonodomainProblem<1>(1.0,true);
         RunBidomainProblem<1>(1.0,true);
@@ -612,10 +612,10 @@ public:
         }
     }
 
-    void todoTestBidomain3d() throw (Exception)
+    void TestBidomain3d() throw (Exception)
     {
         HeartConfig::Instance()->SetUseAbsoluteTolerance(1e-11);
-        for(unsigned N=0; N<4; N++)
+        for(unsigned N=3; N<4; N++)
         {
             double factor = 1.0/pow(2,N);
             RunBidomainProblem<3>(factor);
@@ -734,6 +734,12 @@ Entering TestMonodomain3d
 0.1, 0.1850249886, 2.083573121;
 0.05, 0.05883734337, 1.055422315;
 0.025, 0.01571918644, 0.5268934223;
+
+Entering TestBidomain3d
+0.1, 0.1167727055, 1.99370425, 0.08253275914, 1.350677342;
+0.05, 0.03257310981, 1.037230142, 0.02301724628, 0.7258621174;
+0.025, 0.008372181866, 0.5243032404, 0.005915685911, 0.3697861914;
+
 
 
          */
