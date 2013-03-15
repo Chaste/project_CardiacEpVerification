@@ -31,10 +31,6 @@ public:
     Vec mBidomainVoltageSolution;
     Vec mBidomainExtracellularPotentialSolution;
 
-    double mNextProgressTime;
-    unsigned mPercent;
-
-
 public:
     ErrorCalculatorForCardiacProblems(AbstractScalarFunction<DIM>* pVoltageExactSolution,
                     AbstractScalarFunction<DIM>* pExtracellularPotentialExactSolution = NULL)
@@ -44,9 +40,7 @@ public:
           mVoltageL2H1Error(0.0),
           mExtracellularPotentialLinfL2Error(0.0),
           mExtracellularPotentialL2H1Error(0.0),
-          mBidomainVoltageSolution(NULL),
-          mNextProgressTime(0.01),
-          mPercent(0)
+          mBidomainVoltageSolution(NULL)
     {
     }
 
@@ -71,11 +65,12 @@ public:
                 mBidomainExtracellularPotentialSolution  = PetscTools::CreateAndSetVec(rMesh.GetNumNodes(), 0.0);
             }
 
-            // bidomain (or bidomain-with-bath), solution = [V0 phie0 V1 phie1 ... Vn phie_n], where n is the number of nodes.
-            for(unsigned i=0; i<rMesh.GetNumNodes(); i++)
+            int lo, hi;
+            VecGetOwnershipRange(mBidomainVoltageSolution, &lo, &hi);
+            for(int index = lo; index < hi; index++)
             {
-                PetscVecTools::SetElement(mBidomainVoltageSolution, i, PetscVecTools::GetElement(solution, 2*i));
-                PetscVecTools::SetElement(mBidomainExtracellularPotentialSolution, i, PetscVecTools::GetElement(solution, 2*i+1));
+                PetscVecTools::SetElement(mBidomainVoltageSolution, index, PetscVecTools::GetElement(solution, 2*index));
+                PetscVecTools::SetElement(mBidomainExtracellularPotentialSolution, index, PetscVecTools::GetElement(solution, 2*index+1));
             }
 
             r_voltage = mBidomainVoltageSolution;
@@ -96,16 +91,7 @@ public:
             }
         }
 
-//        std::cout << std::setprecision(10);
-//        std::cout << time << "\n";
-//        if(time >= mNextProgressTime)
-//        {
-//            mPercent++;
-//            unsigned i=system("date"); i=i;
-//            std::cout << mPercent << "%\n" << std::flush;
-//            mNextProgressTime += 0.01;
-//        }
-
+        //std::cout << time << "\n";
     }
 
     void DoSingleErrorCalculation(AbstractScalarFunction<DIM>* pExactSolution, double time, AbstractTetrahedralMesh<DIM,DIM>& rMesh, Vec solution,
