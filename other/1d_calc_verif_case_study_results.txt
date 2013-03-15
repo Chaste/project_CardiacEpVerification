@@ -19,4 +19,15 @@ Third column: computed conduction velocity (cm/ms)
 -----
 
 
-The following is the results  
+The following are the results for Table 2. See comments in TestConductionVelocityCaseStudyLiteratePaper for how they are 
+obtained.
+
+First column: h
+Second column: L_infinity(L2) norm of solution
+
+0.1, 0.9532601371
+0.05, 0.9879933072
+0.025, 0.9969754841
+0.0125, 0.9992423958
+0.00625, 0.999810506
+0.003125, 0.9999526207

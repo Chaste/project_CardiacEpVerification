@@ -11,18 +11,17 @@ a = [0.05, 0.01, 0.0736375371
 0.0001953125, 3.90625e-05, 0.0744289901];
 
 %% results of 1d monodomain model problem
-%% first column is h, second the computed ||V(1)||_{Linf(L2)}
-%% If uncomment this, change the for i=4:size(a,1) below to i=3:size(a,1)
+%% first column is h, second the computed ||V||_{Linf(L2)}
+%% If uncomment this, change the 'i=4:size(a,1)' below to 'i=3:size(a,1)'
 %% and change CVh to a(1:end,2)
-%a = [0.1, 0.95326;
-%0.05, 0.987993;
-%0.025, 0.996975;
-%0.0125, 0.999242;
-%0.00625, 0.999811;
-%0.003125, 0.999953];
+%a = [0.1, 0.9532601371
+%0.05, 0.9879933072
+%0.025, 0.9969754841
+%0.0125, 0.9992423958
+%0.00625, 0.999810506
+%0.003125, 0.9999526207];
 
 h = a(1:end,1);
-dt = a(1:end,2);
 CVh = a(1:end,3);
 
 p = 0*h;
@@ -44,7 +43,7 @@ for i=4:size(a,1)
 end;
 
 
-disp('h dt CVh CVr p GCI');
-ret = [h dt CVh CVr p GCI]
+disp('h CVh CVr p GCI');
+ret = [h CVh CVr p GCI]
 
 
