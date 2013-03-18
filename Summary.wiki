@@ -27,9 +27,10 @@ The test uses an S1-S2 protocol to induce reentry on a rabbit geometry, and is s
 as medium and coarse resolution versions of the same geometry. See [PaperTutorials/CardiacEpVerification/ReentryOnRabbitMesh ReentryOnRabbitMesh]. 
 
 To run this test you will need to download the meshes and provide their locations. The coarse mesh is already in the Chaste repository, so nothing
-needs to be done for this. Also, it should be fine to run the coarse mesh simulation on a normal desktop or laptop. The fine mesh is available for download
-at the main [http://www.cs.ox.ac.uk/chaste/download.html download page] (download `OxfordRabbitHeart_binary.tgz`). Simulations using this mesh will
-probably require high-performance computing resources. The medium resolution mesh is currently not publicly available (though Oxford CS members please 
-speak to a developer). This page will be updated when the medium-resolution mesh is available.
+needs to be done for this. Also, it should be ok to run the coarse mesh simulation on a normal desktop or laptop. The fine mesh is available for download
+at the main [http://www.cs.ox.ac.uk/chaste/download.html download page] (`OxfordRabbitHeart_binary.tgz`). Simulations using this mesh will
+probably require high-performance computing resources (the simulation for the paper on this mesh took 74 minutes using 256 processes). 
+The medium resolution mesh is currently not publicly available (though Oxford CS members please speak to a developer). 
+This page will be updated when the medium-resolution mesh is available.
 
 
