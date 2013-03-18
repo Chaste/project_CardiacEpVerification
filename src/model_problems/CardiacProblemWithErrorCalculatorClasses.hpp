@@ -65,6 +65,10 @@ public:
                 mBidomainExtracellularPotentialSolution  = PetscTools::CreateAndSetVec(rMesh.GetNumNodes(), 0.0);
             }
 
+
+            // Get the voltage and phi_e out of the full solution (=[V0 phi0 V1 phi1 .. VN phiN]) as two Vecs.
+            // Parallel comment: sometimes fails in parallel, probably because the ownership isn't guaranteed to be the same
+            // between the three Vecs?
             int lo, hi;
             VecGetOwnershipRange(mBidomainVoltageSolution, &lo, &hi);
             for(int index = lo; index < hi; index++)
@@ -91,7 +95,7 @@ public:
             }
         }
 
-        //std::cout << time << "\n";
+        std::cout << time << "\n";
     }
 
     void DoSingleErrorCalculation(AbstractScalarFunction<DIM>* pExactSolution, double time, AbstractTetrahedralMesh<DIM,DIM>& rMesh, Vec solution,

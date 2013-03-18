@@ -555,10 +555,15 @@ private:
 
     /* == Main test ==
      *
-     * Finally, we have the public 'tests', which actually run the simulations. Note that as integrals over the domain have to be
+     * Finally, we have the public 'tests', which actually run the simulations. Note that only the first two tests will be run,
+     * as the code is written before, as only those whose name begins with 'Test' are run. To run the others, remove change
+     * `doneTest..` to `Test..`.
+     *
+     * As integrals over the domain have to be
      * computed each timestep, virtually all the time is spent in the error calculations, certainly for the larger N (ie smaller h). Also,
-     * dt is proportional to h^2, so for 3D, the work increases by at least a factor of 32 (2^3^ 2^2^) as N doubles. N=3 for
-     * 3D monodomain and bidomain were run on a cluster.
+     * dt is proportional to h^2^, so for 3D, the work increases by at least a factor of 32 (2^3^ 2^2^) as N doubles. The N=3 simulations for
+     * monodomain and bidomain take a long time on a desktop. Monodomain will run in parallel, bidomain may sometimes not (see comment in
+     * `CardiacProblemWithErrorCalculatorClasses`).
      */
 public:
     void TestRunTests() throw (Exception)
@@ -568,7 +573,7 @@ public:
         RunBidomainWithBathProblem<1>(1.0,true);
     }
 
-    void doneTestMonodomain1d() throw (Exception)
+    void TestMonodomain1d() throw (Exception)
     {
         for(unsigned N=0; N<5; N++)
         {
@@ -585,7 +590,6 @@ public:
             RunMonodomainProblem<2>(factor);
         }
     }
-
 
     void doneTestMonodomain3d() throw (Exception)
     {
@@ -617,10 +621,10 @@ public:
         }
     }
 
-    void todoTestBidomain3d() throw (Exception)
+    void doneTestBidomain3d() throw (Exception)
     {
         HeartConfig::Instance()->SetUseAbsoluteTolerance(1e-11);
-        for(unsigned N=0; N<4; N++) // note: N=3 takes very long
+        for(unsigned N=3; N<4; N++) // note: N=3 takes very long
         {
             double factor = 1.0/pow(2,N);
             RunBidomainProblem<3>(factor);
@@ -636,17 +640,7 @@ public:
             RunBidomainWithBathProblem<2>(factor);
         }
     }
-
-
 };
 
 #endif //TESTEPAGAINSTEXACTSOLUTIONS_HPP_
-
-/*
-Entering TestBidomain3d
-0.1, 0.1167727055, 1.99370425, 0.08253275914, 1.350677342;
-0.05, 0.03257310981, 1.037230142, 0.02301724628, 0.7258621174;
-0.025, 0.008372181866, 0.5243032404, 0.005915685911, 0.3697861914;
-
-*/
 
