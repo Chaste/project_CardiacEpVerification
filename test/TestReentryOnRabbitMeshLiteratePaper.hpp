@@ -98,7 +98,7 @@ public:
         {
             case COARSERES_ISOTROPIC:
             {
-             	HeartConfig::Instance()->SetMeshFileName("apps/texttest/weekly/Propagation3d/heart_chaste2_renum_i_triangles");
+             	HeartConfig::Instance()->SetMeshFileName("apps/texttest/weekly/Propagation3d/OxfordRabbitHeart_482um");
                 break;
             }
             case MEDIUMRES_ISOTROPIC:
