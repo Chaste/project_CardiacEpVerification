@@ -103,12 +103,14 @@ public:
             }
             case MEDIUMRES_ISOTROPIC:
             {
-                HeartConfig::Instance()->SetMeshFileName("../../data/low_res_downsampled_oxford_rabbit/heart_chaste_renum_i_triangles");
+                // provide correct location!
+                HeartConfig::Instance()->SetMeshFileName("../Data/OxfordRabbitHeart/medium_res/OxfordRabbitHeart_251um");
                 break;
             }
             case FULLRES_ISOTROPIC:
             {
-                HeartConfig::Instance()->SetMeshFileName("../Data/OxfordRabbitHeart/fullres/OxfordRabbitHeart_binary");
+                // provide correct location!
+                HeartConfig::Instance()->SetMeshFileName("../Data/OxfordRabbitHeart/full_res/OxfordRabbitHeart_binary"); //125um
                 break;
             }
             default:
