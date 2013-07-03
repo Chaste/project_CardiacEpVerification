@@ -94,8 +94,6 @@ public:
                 DoSingleErrorCalculation(mpExtracellularPotentialExactSolution, time, rMesh, mBidomainExtracellularPotentialSolution, mExtracellularPotentialLinfL2Error, mExtracellularPotentialL2H1Error, false);
             }
         }
-
-        std::cout << time << "\n";
     }
 
     void DoSingleErrorCalculation(AbstractScalarFunction<DIM>* pExactSolution, double time, AbstractTetrahedralMesh<DIM,DIM>& rMesh, Vec solution,
