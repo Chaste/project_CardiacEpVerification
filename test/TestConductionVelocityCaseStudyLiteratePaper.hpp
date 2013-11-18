@@ -227,9 +227,9 @@ public:
         }
     }
 };
-/* To obtain the results for the monodomain model problem QOI (Table 2), run TestMonodomain1d() in TestEpAgainstExactSolutionsLiteratePaper,
+/* To obtain the results for the monodomain model problem QOI (Table 2), run `TestMonodomain1d()` in `TestEpAgainstExactSolutionsLiteratePaper`,
  * after making a tiny edit to `L2ErrorSquaredCalculator` so that it only calculates the norm of the numerical solution, and ignores the
- * exact solution part (see comment in `L2ErrorSquaredCalculator` about section 4.3.1).
+ * exact solution part (see the comment in `L2ErrorSquaredCalculator` about Section 3.1).
  */
 
 

@@ -2,7 +2,7 @@
  = Verification of computational models of cardiac electro-physiology = 
 
 The project corresponds to the paper: Pras Pathmanathan and Richard A. Gray, ''Verification of computational models of 
-cardiac electro-physiology'' (in submission). 
+cardiac electro-physiology'', accepted for publication in International Journal for Numerical Methods in Bioengineering.
 
 Walk-throughs of the main tests are given below. The entire project, which includes all source files, results files and matlab scripts, can be viewed at 
 [https://chaste.cs.ox.ac.uk/trac/browser/projects/CardiacEpVerification projects/CardiacEpVerification],

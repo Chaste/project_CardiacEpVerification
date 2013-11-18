@@ -92,7 +92,7 @@ public:
         std::cout << conductivity << "\n";
         HeartConfig::Instance()->SetIntracellularConductivities(Create_c_vector(conductivity,conductivity,conductivity));
 
-        /* '''The coarse mesh is in the repository but you will need to obtain the medium/fine meshes and provide the locations here'''
+        /* '''The coarse mesh is in the repository, but there others are not - you will need to obtain the medium/fine meshes and provide their locations here'''
          * (see project intro page for details on where to get the meshes). */
         switch(geometry)
         {

@@ -210,7 +210,7 @@ private:
         double s2 = 1.2/(M_PI*M_PI);
         double s3 = 0.3/(M_PI*M_PI);
 
-        /* Define the integers m,,1,,, m,,2,, m,,3,, that go into the function F, where F(x,y,z) = cos(m1*pi*x)*cos(m2*pi*y)*cos(m3*pi*z). */
+        /* Define the integers m,,1,,, m,,2,,, m,,3,, that go into the function F, where F(x,y,z) = cos(m1*pi*x)*cos(m2*pi*y)*cos(m3*pi*z). */
         unsigned m1 = 1;
         unsigned m2 = 2;
         unsigned m3 = 3;
@@ -332,7 +332,7 @@ private:
         double s2 = 1.2/(M_PI*M_PI);
         double s3 = 0.3/(M_PI*M_PI);
 
-        /* Define the integers m,,1,,, m,,2,, m,,3,, that go into the function F, where F(x,y,z) = cos(m1*pi*x)*cos(m2*pi*y)*cos(m3*pi*z). */
+        /* Define the integers m,,1,,, m,,2,,, m,,3,, that go into the function F, where F(x,y,z) = cos(m1*pi*x)*cos(m2*pi*y)*cos(m3*pi*z). */
         unsigned m1 = 1.0;
         unsigned m2 = 2.0;
         unsigned m3 = 3.0;
@@ -449,7 +449,7 @@ private:
         double s2 = 1.2/(M_PI*M_PI);
         double s3 = 0.3/(M_PI*M_PI);
 
-        /* Define the integers m,,1,,, m,,2,,, m,,3,, that go into the function F, where F(x,y,z) = cos(m1*pi*x). Note no m2 and m3 as for bath
+        /* Define the integer m,,1,, that goes into the function F(x,y,z) = cos(m1*pi*x). Note no m2 and m3 as for bath
          * problem these must be zero. */
         unsigned m1 = 1;
 
@@ -558,7 +558,7 @@ private:
     /* == Main test ==
      *
      * Finally, we have the public 'tests', which actually run the simulations. Note that only the first two tests will be run,
-     * as the code is written before, as only those whose name begins with 'Test' are run. To run the others, remove change
+     * as the code is written below, as only those whose name begins with 'Test' are run. To run the others, remove change
      * `doneTest..` to `Test..`.
      *
      * As integrals over the domain have to be
