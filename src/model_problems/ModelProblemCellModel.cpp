@@ -30,7 +30,7 @@ void ModelProblemCellModel::EvaluateYDerivatives(double time, const std::vector<
     double u2 = rY[2];
     double u3 = rY[3];
 
-    rDY[0] = 0.0; // normally it would be -iionic here, but cell model will never be run outside of tissue simulation so this value will be ignored
+    rDY[0] = 0.0; // normally it would be -iionic here (as rY[0]=voltage), but cell model will never be run outside of tissue simulation so this value will be ignored
 
     /* Define functions prescribed in paper */
     rDY[1] = (u1+u3-V)*(u1+u3-V)*u2*u2 + (u1+u3-V)*u2*u2*(V-u3)/2.0;

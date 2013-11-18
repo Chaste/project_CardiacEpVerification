@@ -28,7 +28,7 @@ private:
                         c_vector<double,1>& rU, // what is in rU depends on whether it is the voltage or phi_e that is given by the calling class
                         c_matrix<double,1,DIM>& rGradU)
     {
-        double soln_exact = mpExactSolution->Compute(mTime,rX); // replace with zero to compute q for Section 4.3.1 of paper
+        double soln_exact = mpExactSolution->Compute(mTime,rX); // replace with zero to compute q for Section 3.1 of paper
         return (rU(0) - soln_exact)*(rU(0) - soln_exact);
     }
 

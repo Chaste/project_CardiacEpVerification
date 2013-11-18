@@ -38,10 +38,10 @@ template<unsigned DIM>
 class NonBathModelProblemCellFactory : public AbstractCardiacCellFactory<DIM>
 {
 private:
-    double mBeta;
-    unsigned mM1;
-    unsigned mM2;
-    unsigned mM3;
+    double mBeta; // as defined in paper
+    unsigned mM1; // coefficient of pi*x in:   F(x) = cos(m1*pi*x)   or   F(x,y) = cos(m1*pi*x)cos(m2*pi*y)   or   F(x,y,z) = cos(m1*pi*x)*cos(m2*pi*y)*cos(m3*pi*z)
+    unsigned mM2; // coefficient of pi*y in:   F(x) = cos(m1*pi*x)   or   F(x,y) = cos(m1*pi*x)cos(m2*pi*y)   or   F(x,y,z) = cos(m1*pi*x)*cos(m2*pi*y)*cos(m3*pi*z)
+    unsigned mM3; // coefficient of pi*z in:   F(x) = cos(m1*pi*x)   or   F(x,y) = cos(m1*pi*x)cos(m2*pi*y)   or   F(x,y,z) = cos(m1*pi*x)*cos(m2*pi*y)*cos(m3*pi*z)
 
 public:
     NonBathModelProblemCellFactory(double beta, unsigned m1, unsigned m2=0, unsigned m3 = 0)
@@ -82,8 +82,8 @@ class BathModelProblemCellFactory : public AbstractCardiacCellFactory<DIM>
 {
 private:
     double mBeta; // beta as defined in the paper
-    unsigned mM1; // the m1 in the definition of F
-    double mAlpha;// alpha as in the paper
+    unsigned mM1; // coefficient of pi*x in:   F(x,y,z) = cos(m1*pi*x)
+    double mAlpha;// alpha as defined in the paper
     double mExtracellularConductivity; // the variable s_e in the paper
 
 public:
@@ -210,7 +210,7 @@ private:
         double s2 = 1.2/(M_PI*M_PI);
         double s3 = 0.3/(M_PI*M_PI);
 
-        /* Define the integers m,,1,,, m,,2,, m,,3,, that go into F, as specified in the paper. */
+        /* Define the integers m,,1,,, m,,2,, m,,3,, that go into the function F, where F(x,y,z) = cos(m1*pi*x)*cos(m2*pi*y)*cos(m3*pi*z). */
         unsigned m1 = 1;
         unsigned m2 = 2;
         unsigned m3 = 3;
@@ -332,6 +332,7 @@ private:
         double s2 = 1.2/(M_PI*M_PI);
         double s3 = 0.3/(M_PI*M_PI);
 
+        /* Define the integers m,,1,,, m,,2,, m,,3,, that go into the function F, where F(x,y,z) = cos(m1*pi*x)*cos(m2*pi*y)*cos(m3*pi*z). */
         unsigned m1 = 1.0;
         unsigned m2 = 2.0;
         unsigned m3 = 3.0;
@@ -448,7 +449,8 @@ private:
         double s2 = 1.2/(M_PI*M_PI);
         double s3 = 0.3/(M_PI*M_PI);
 
-        /* Here, F(x,y,z) = cos(pi*x), whatever the dimension. */
+        /* Define the integers m,,1,,, m,,2,,, m,,3,, that go into the function F, where F(x,y,z) = cos(m1*pi*x). Note no m2 and m3 as for bath
+         * problem these must be zero. */
         unsigned m1 = 1;
 
         DistributedTetrahedralMesh<DIM,DIM> mesh;
@@ -624,7 +626,7 @@ public:
     void doneTestBidomain3d() throw (Exception)
     {
         HeartConfig::Instance()->SetUseAbsoluteTolerance(1e-11);
-        for(unsigned N=3; N<4; N++) // note: N=3 takes very long
+        for(unsigned N=0; N<4; N++) // note: N=3 takes very long
         {
             double factor = 1.0/pow(2,N);
             RunBidomainProblem<3>(factor);
