@@ -558,7 +558,7 @@ private:
     /* == Main test ==
      *
      * Finally, we have the public 'tests', which actually run the simulations. Note that only the first two tests will be run,
-     * as the code is written below, as only those whose name begins with 'Test' are run. To run the others, remove change
+     * as the code is written below, as only those whose name begins with 'Test' are run. To run the others, change
      * `doneTest..` to `Test..`.
      *
      * As integrals over the domain have to be

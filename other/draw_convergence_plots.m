@@ -1,6 +1,3 @@
-% note, tested in octave not matlab
-
-
 function draw_convergence_plots
 
 handle = figure;
@@ -13,13 +10,6 @@ for i=2:5
   subplot(3,2,i+1);
   do_one_plot(i);
 end;
-
-FN = findall(handle,'-property','FontName');
-set(FN,'FontName','Arial')
-
-FN = findall(handle,'-property','LineWidth');
-set(FN,'LineWidth',1)
-
 
 
 
@@ -104,13 +94,13 @@ if(~do_bath)
     else
        type = 'k*--';
     end
-    loglog(dat1(:,1), dat1(:,ind), type, "markersize", 3);
+    loglog(dat1(:,1), dat1(:,ind), type, 'markersize', 3);
     if(ind==2)
       hold on;
     end;
 
-    loglog(dat2(:,1), dat2(:,ind), type, "markersize", 3);
-    loglog(dat3(:,1), dat3(:,ind), type, "markersize", 3);
+    loglog(dat2(:,1), dat2(:,ind), type, 'markersize', 3);
+    loglog(dat3(:,1), dat3(:,ind), type, 'markersize', 3);
 
     if(ind==2)
       text(dat1(1,1)*0.7,dat1(1,ind)/4,'1D','fontsize',8);
@@ -157,9 +147,9 @@ if(do_bath)
     dat = bath2(:,[1,4:5]);
   end
 
-  loglog(dat(:,1), dat(:,2), 'k*-', "markersize", 3);
+  loglog(dat(:,1), dat(:,2), 'k*-', 'markersize', 3);
   hold on;
-  loglog(dat(:,1), dat(:,3), 'k*--', "markersize", 3);
+  loglog(dat(:,1), dat(:,3), 'k*--', 'markersize', 3);
 
   x1 = dat(2,1); x2 = dat(4,1);
   loglog([x1 x2], 10*[x1 x2], 'k');
