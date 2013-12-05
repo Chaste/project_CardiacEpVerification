@@ -27,10 +27,16 @@ The test uses an S1-S2 protocol to induce reentry on a rabbit geometry, and is s
 as medium and coarse resolution versions of the same geometry. See [PaperTutorials/CardiacEpVerification/ReentryOnRabbitMesh ReentryOnRabbitMesh]. 
 
 To run this test you will need to download the meshes and provide their locations. The coarse mesh is already in the Chaste repository, so nothing
-needs to be done for this. Also, it should be ok to run the coarse mesh simulation on a normal desktop or laptop. The fine mesh is available for download
+needs to be done for this. Also, it is possible run the coarse mesh simulation on a normal desktop or laptop. The fine mesh is available for download
 at the main [http://www.cs.ox.ac.uk/chaste/download.html download page] (`OxfordRabbitHeart_binary.tgz`). Simulations using this mesh will
 probably require high-performance computing resources (the simulation for the paper on this mesh took 74 minutes using 256 processes). 
-The medium resolution mesh is currently not publicly available (though Oxford CS members please speak to a developer). 
-This page will be updated when the medium-resolution mesh is available.
+The medium and fine resolution meshes are both contained in the public data repository -- see https://chaste.cs.ox.ac.uk/trac/browser/data/public. 
 
-
+'''Note:''' We have recently observed that these simulations can, when run on different hardware/software configurations but using the same mesh, 
+can look identical for (say) up to 500ms, but then begin to differ - presumably an example of tiny differences in a chaotic system building up
+to large differences. This should be taken into account if you run any of the simulations and then compare with the figures in the paper. 
+It may be possible to force these divergences to occur later by using much smaller tolerances; more investigation is required.  
+These observations does not affect the conclusions of Section 3.2 in the paper, that anatomical detail (fine vs medium mesh) leads to large
+differences in activation patterns (much earlier than 500ms) and overall that calculation verification for simulations involving such arrhythmic
+activity appears is extremely difficult. When using such simulations it will be important to choose robust QOIs for which numerical 
+error can be meaningfully estimated.
