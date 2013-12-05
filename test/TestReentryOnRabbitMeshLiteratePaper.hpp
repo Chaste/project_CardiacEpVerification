@@ -89,7 +89,6 @@ public:
          * 70%.
          */
         double conductivity = 14.0/15.0;
-        std::cout << conductivity << "\n";
         HeartConfig::Instance()->SetIntracellularConductivities(Create_c_vector(conductivity,conductivity,conductivity));
 
         /* '''The coarse mesh is in the repository, but there others are not - you will need to obtain the medium/fine meshes and provide their locations here'''
@@ -103,13 +102,13 @@ public:
             }
             case MEDIUMRES_ISOTROPIC:
             {
-                // provide correct location!
+                // ** User should provide correct location **
                 HeartConfig::Instance()->SetMeshFileName("../Data/OxfordRabbitHeart/medium_res/OxfordRabbitHeart_251um");
                 break;
             }
             case FULLRES_ISOTROPIC:
             {
-                // provide correct location!
+                // ** User should provide correct location **
                 HeartConfig::Instance()->SetMeshFileName("../Data/OxfordRabbitHeart/full_res/OxfordRabbitHeart_binary"); //125um
                 break;
             }
